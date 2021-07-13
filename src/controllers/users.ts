@@ -1,8 +1,13 @@
-import db from '../db/db';
+import connection from '../database/connection';
 
-export function getUsers(req: any, res: any, next:any){
-    const users = db.data?.users.values();
+export async function getUsers(req: any, res: any, next:any): Promise<void>{
+    try{
+      const users = await connection.select().table('users')
 
-    res.json({ users })
-    return res.status(200);
+      res.json(users)
+      return res.status(200);
+    }catch(err){
+      console.log(err)
+      
+    }
   }
